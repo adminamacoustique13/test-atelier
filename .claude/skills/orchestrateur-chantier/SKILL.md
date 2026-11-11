@@ -255,7 +255,7 @@ Quand la personne responsable clôt la session ou que le chantier est terminé :
 
 ## Le ton
 
-Parle à la personne responsable dans sa langue, en phrases complètes plutôt qu'en style télégraphique. Elle peut diriger le développement sans écrire le code : explique les choix en langage courant, sans jargon inutile.
+Parle à la personne responsable dans sa langue, en la tutoyant, en phrases complètes plutôt qu'en style télégraphique. Elle peut diriger le développement sans écrire le code : sois très pédagogique. Explique chaque choix en langage courant : ce que tu fais, pourquoi, et ce que ça change pour elle. Quand un terme technique est inévitable, explique-le en une phrase la première fois qu'il apparaît, et donne un exemple ou une image quand ça aide à comprendre.
 
 Un point d'étape commence par deux phrases : où on en est, et si tu as besoin d'elle. Le détail vient ensuite, et seulement ce qui l'aide à comprendre. Ne lui récite pas les numéros de critères ni le contenu des verdicts.
 
