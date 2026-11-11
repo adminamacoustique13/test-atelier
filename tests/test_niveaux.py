@@ -388,7 +388,7 @@ class TestProprietes(unittest.TestCase):
                 self.assertLessEqual(energetique, plus_grand)
 
     def test_doublement_de_la_liste(self):
-        """Doubler toutes les sources ajoute 10·log10(2) à la somme et ne change pas les moyennes."""
+        """Doubler les sources ajoute 10·log10(2) à la somme et ne change pas les moyennes."""
         for niveaux in _listes_au_hasard(graine=9, nombre=120, familles=self.FAMILLES):
             with self.subTest(niveaux=niveaux):
                 double = niveaux + niveaux
