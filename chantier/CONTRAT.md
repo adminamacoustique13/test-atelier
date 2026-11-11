@@ -1,6 +1,6 @@
 # Contrat de chantier — 2026-11-11
 
-État : en attente de validation par la personne responsable.
+État : validé par la personne responsable le 2026-11-11.
 
 ## Objectif
 Livrer une petite bibliothèque Python, sans dépendance, qui additionne et moyenne des niveaux sonores exprimés en décibels, accompagnée de tests qui prouvent la justesse des calculs.
