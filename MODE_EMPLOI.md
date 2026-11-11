@@ -23,9 +23,9 @@ Une entrée vide, infinie ou NaN lève `ValueError`. Une valeur non numérique, 
 ```python
 from decibels import somme_niveaux, moyenne_energetique, moyenne_arithmetique
 
-somme_niveaux([60, 60])           # 63.01 dB
-moyenne_energetique([60, 70])     # 67.40 dB
-moyenne_arithmetique([60, 70])    # 65 dB
+somme_niveaux([60, 60])  # 63.01 dB
+moyenne_energetique([60, 70])  # 67.40 dB
+moyenne_arithmetique([60, 70])  # 65 dB
 ```
 
 Les valeurs arrondies à deux décimales sont celles de l'exemple. La fonction rend le résultat exact en `float`.

@@ -2,7 +2,7 @@
 
 Contrat : `chantier/CONTRAT.md`, validé le 2026-11-11. Enveloppe : 6 agents, 3 tentatives par tâche, 2 montées en gamme.
 
-Agents lancés à ce jour : 5 sur 6. Le sixième est réservé au vérificateur de A.1 : il ne reste aucune marge pour une seconde tentative sans accord de la personne responsable.
+Agents lancés à ce jour : 6 sur 6. Il ne reste aucune marge pour une seconde tentative sans accord de la personne responsable.
 
 ## Sous-plan unique : la bibliothèque `decibels`
 
@@ -67,7 +67,7 @@ Preuve : la commande de test du profil passe ; le vérificateur recalcule les va
 
 ## Tâche A.1 — Forme de l'exemple du mode d'emploi (ajoutée en route)
 
-- État : en cours
+- État : vérifié
 - Origine : l'ouvrier de B a constaté que `ruff format --check .` échoue sur `MODE_EMPLOI.md`. L'orchestrateur n'avait lancé que `ruff check` sur la tâche A, pas la commande complète du profil : erreur de l'orchestrateur, pas de l'ouvrier.
 - Dosage : `ouvrier-mecanique` (Haiku, faible), vérifié par `verificateur-sonnet`
 - Périmètre : `MODE_EMPLOI.md`, `chantier/relais/A.1.md`
@@ -86,7 +86,7 @@ Preuve : la commande du profil et le diff du fichier.
 |---|---|---|---|---|---|
 | A | vérifié | ouvrier-mecanique (Haiku, faible), vérifié par verificateur-sonnet | 1 | 0 | tomllib et ruff lisent la configuration ; chiffres du mode d'emploi recalculés ; métadonnées setuptools construites sur une copie |
 | B | en vérification | ouvrier-physique (Fable, max), vérificateur verificateur-fable-max | 1 | 0 | 47 tests passent, ruff passe, périmètre respecté |
-| A.1 | en cours | ouvrier-mecanique | 1 | 0 | |
+| A.1 | vérifié | ouvrier-mecanique (Haiku, faible), vérifié par verificateur-sonnet | 1 | 0 | `ruff format --check .` passe et échoue bien sur une copie cassée ; diff limité aux trois lignes de l'exemple |
 
 ## Notes
 
