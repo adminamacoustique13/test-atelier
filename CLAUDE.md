@@ -21,6 +21,16 @@ Escalade quand un ouvrier échoue : seconde chance au même niveau avec les rema
 
 Ne lance jamais deux ouvriers en même temps sur des fichiers qui se chevauchent.
 
+## La chaîne d'hygiène
+
+Trois contrôles automatiques, déjà en place dans le dépôt :
+
+- après chaque fichier écrit, Ruff le met en forme et renvoie ce qui reste à corriger (`.claude/hooks/apres-ecriture.sh`) ;
+- avant chaque commit, Ruff et les tests doivent passer (`.githooks/pre-commit`, branché au démarrage de la session) ;
+- sur chaque pull request, GitHub rejoue tout (`.github/workflows/controles.yml`).
+
+Les règles de forme et le plafond de complexité sont dans `ruff.toml`. Ruff et pytest sont déjà installés dans les sessions cloud. Pour du Rust, le même rôle est tenu par cargo fmt, clippy et cargo test. Ne contourne jamais ces contrôles (pas de `--no-verify`) : s'ils bloquent, c'est le travail qu'on corrige.
+
 ## Ce que cette session ne peut pas faire
 
 Elle tourne sous Linux : rien d'iOS (Swift, Xcode) ne se compile ni ne se teste ici. Si une tâche en dépend, mets-la de côté dans le cahier avec l'état « bloqué : demande un Mac ».

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Deuxième contrôle de la chaîne d'hygiène : rien ne s'enregistre si la forme ou les tests échouent.
+# Un outil absent est signalé sans bloquer : le contrôle sur GitHub reste le dernier mot.
+
+echec=0
+signaler() { echo "Contrôle avant enregistrement : $1" >&2; }
+
+if git ls-files '*.py' | grep -q .; then
+  if command -v ruff >/dev/null; then
+    ruff check . || { signaler "Ruff a trouvé des problèmes."; echec=1; }
+    ruff format --check . || { signaler "des fichiers ne sont pas mis en forme (ruff format)."; echec=1; }
+  else
+    signaler "Ruff n'est pas installé ici, contrôle de forme sauté."
+  fi
+  if python3 -c "import pytest" 2>/dev/null; then
+    python3 -m pytest -q; code=$?
+    # 5 veut dire « aucun test trouvé » : ce n'est pas un échec.
+    [ "$code" -eq 0 ] || [ "$code" -eq 5 ] || { signaler "des tests échouent."; echec=1; }
+  else
+    python3 -m unittest discover -q; code=$?
+    [ "$code" -eq 0 ] || [ "$code" -eq 5 ] || { signaler "des tests échouent."; echec=1; }
+  fi
+fi
+
+if [ -f Cargo.toml ]; then
+  if command -v cargo >/dev/null; then
+    cargo fmt --check || { signaler "du code Rust n'est pas mis en forme (cargo fmt)."; echec=1; }
+    cargo clippy --quiet --all-targets -- -D warnings -W clippy::cognitive_complexity \
+      || { signaler "clippy a trouvé des problèmes."; echec=1; }
+    cargo test --quiet || { signaler "des tests Rust échouent."; echec=1; }
+  else
+    signaler "cargo n'est pas installé ici, contrôles Rust sautés."
+  fi
+fi
+
+exit $echec
