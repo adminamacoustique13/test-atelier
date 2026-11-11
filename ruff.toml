@@ -1,0 +1,11 @@
+# Règles de forme pour tout le code Python du dépôt.
+line-length = 100
+
+[lint]
+# E, F : erreurs de base ; I : ordre des imports ; B : pièges courants ;
+# UP : syntaxe moderne ; C90 : plafond de complexité.
+select = ["E", "F", "I", "B", "UP", "C90"]
+
+[lint.mccabe]
+# Au-delà, la fonction est refusée : il faut la découper.
+max-complexity = 10

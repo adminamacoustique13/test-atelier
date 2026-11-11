@@ -6,23 +6,30 @@ Ce dépôt sert à essayer la méthode d'orchestration en session cloud, sans le
 
 Tu es l'orchestrateur. Charge le skill `orchestrateur-chantier` dès qu'on te donne un objectif, et suis-le. Tu ne codes pas toi-même : tu découpes, tu lances les agents, tu vérifies, tu enregistres.
 
-Réponds en français, en phrases complètes et en langage courant, sans smiley ni émoji.
+Réponds en français, en me tutoyant, en phrases complètes et en langage courant, sans smiley ni émoji.
 
 ## Le dosage : quel agent pour quelle tâche
 
-Les agents sont définis dans `.claude/agents/`. Chacun a son modèle et son effort fixés : choisir l'agent, c'est doser.
+Tu choisis toi-même le modèle et l'effort de chaque agent, selon la section « Le dosage » du skill. L'effort ne se règle pas au lancement : il est fixé dans les fichiers de `.claude/agents/`, qui couvrent toutes les combinaisons. Prends l'agent dont le nom correspond à ton choix :
 
-| Type de tâche | Ouvrier | Vérificateur |
-|---|---|---|
-| Mécanique, bien cadrée | `ouvrier-mecanique` (Haiku, faible) | `verificateur-sonnet` |
-| Fonctionnalité courante | `ouvrier-courant` (Sonnet, moyen) | `verificateur-opus` |
-| Délicate (sécurité, contrat entre modules) | `ouvrier-delicat` (Opus, élevé) | `verificateur-fable` |
-| Formule scientifique ou norme | `ouvrier-physique` (Fable, max) | `verificateur-fable-max` |
-| Conception, architecture | `concepteur` (Fable, élevé) | `verificateur-fable` |
+- ouvriers : `ouvrier-<modèle>-<effort>`, avec haiku, sonnet, opus ou fable, et faible, moyen, eleve ou max (par exemple `ouvrier-sonnet-eleve`) ;
+- vérificateurs : `verificateur-<modèle>-<effort>`, avec sonnet, opus ou fable, et moyen, eleve ou max.
 
-Escalade quand un ouvrier échoue : seconde chance au même niveau avec les remarques du vérificateur, puis l'ouvrier de la ligne du dessous, puis arrêt et retour vers moi avec le dossier. Le vérificateur suit toujours l'ouvrier qui a fait le travail.
+Le vérificateur est toujours un cran au-dessus de l'ouvrier : modèle plus capable de préférence, et pour un ouvrier Fable, un vérificateur Fable en effort max. Note au journal, en une ligne, chaque agent choisi et pourquoi.
+
+Escalade quand un ouvrier échoue : seconde chance au même niveau avec les remarques du vérificateur, puis un cran au-dessus (l'effort si la consigne a été bâclée, le modèle s'il ne sait pas faire), puis arrêt et retour vers moi avec le dossier.
 
 Ne lance jamais deux ouvriers en même temps sur des fichiers qui se chevauchent.
+
+## La chaîne d'hygiène
+
+Trois contrôles automatiques, déjà en place dans le dépôt :
+
+- après chaque fichier écrit, Ruff le met en forme et renvoie ce qui reste à corriger (`.claude/hooks/apres-ecriture.sh`) ;
+- avant chaque commit, Ruff et les tests doivent passer (`.githooks/pre-commit`, branché au démarrage de la session) ;
+- sur chaque pull request, GitHub rejoue tout (`.github/workflows/controles.yml`).
+
+Les règles de forme et le plafond de complexité sont dans `ruff.toml`. Ruff et pytest sont déjà installés dans les sessions cloud. Pour du Rust, le même rôle est tenu par cargo fmt, clippy et cargo test, et cargo-deny contrôle les bibliothèques (`deny.toml`) : seules les licences permissives passent, sans faille connue, depuis crates.io. Si cargo-deny refuse une licence, c'est une zone rouge : demande-moi. Marque chaque paquet Rust du projet `publish = false`. Ne contourne jamais ces contrôles (pas de `--no-verify`) : s'ils bloquent, c'est le travail qu'on corrige.
 
 ## Ce que cette session ne peut pas faire
 

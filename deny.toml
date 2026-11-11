@@ -1,0 +1,46 @@
+# Contrôle des bibliothèques Rust (cargo-deny) : licences, failles connues, provenance.
+# Utilisé avant chaque enregistrement et sur GitHub dès qu'il y a du Rust dans le dépôt.
+
+[graph]
+all-features = true
+
+[advisories]
+# Refuse une bibliothèque touchée par une faille connue ou retirée par son auteur.
+version = 2
+yanked = "deny"
+
+[licenses]
+# Seules les licences permissives passent. Une autre licence (AGPL, GPL, MPL…) bloque :
+# l'orchestrateur doit alors demander à la personne responsable.
+version = 2
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "0BSD",
+    "CC0-1.0",
+    "Unicode-3.0",
+]
+confidence-threshold = 0.9
+# Ne pas signaler les licences de la liste qu'aucune bibliothèque n'utilise.
+unused-allowed-license = "allow"
+
+[licenses.private]
+# Le code du projet lui-même n'a pas de licence publique : on ne le contrôle pas.
+# Il faut pour cela marquer chaque paquet du projet `publish = false` dans son Cargo.toml.
+ignore = true
+
+[bans]
+# Pas de version « n'importe laquelle » : chaque bibliothèque a une version précise.
+multiple-versions = "warn"
+wildcards = "deny"
+
+[sources]
+# Les bibliothèques viennent du registre officiel crates.io, nulle part ailleurs.
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

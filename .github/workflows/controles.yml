@@ -1,0 +1,46 @@
+# Troisième contrôle de la chaîne d'hygiène : GitHub rejoue tout sur chaque pull request.
+name: Contrôles
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installer les outils
+        run: pip install ruff pytest
+      - name: Forme (Ruff)
+        run: |
+          ruff check .
+          ruff format --check .
+      - name: Tests
+        run: |
+          python -m pytest -q || [ $? -eq 5 ]
+
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Y a-t-il du Rust ?
+        id: rust
+        run: |
+          if [ -f Cargo.toml ]; then echo "present=true" >> "$GITHUB_OUTPUT"; else echo "Pas de code Rust dans ce dépôt."; fi
+      - name: Forme, défauts et tests (cargo fmt, clippy, cargo test)
+        if: steps.rust.outputs.present == 'true'
+        run: |
+          cargo fmt --check
+          cargo clippy --all-targets -- -D warnings -W clippy::cognitive_complexity
+          cargo test
+      - name: Licences, failles et provenance des bibliothèques (cargo-deny)
+        if: steps.rust.outputs.present == 'true'
+        uses: EmbarkStudios/cargo-deny-action@v2
