@@ -29,7 +29,7 @@ Trois contrôles automatiques, déjà en place dans le dépôt :
 - avant chaque commit, Ruff et les tests doivent passer (`.githooks/pre-commit`, branché au démarrage de la session) ;
 - sur chaque pull request, GitHub rejoue tout (`.github/workflows/controles.yml`).
 
-Les règles de forme et le plafond de complexité sont dans `ruff.toml`. Ruff et pytest sont déjà installés dans les sessions cloud. Pour du Rust, le même rôle est tenu par cargo fmt, clippy et cargo test. Ne contourne jamais ces contrôles (pas de `--no-verify`) : s'ils bloquent, c'est le travail qu'on corrige.
+Les règles de forme et le plafond de complexité sont dans `ruff.toml`. Ruff et pytest sont déjà installés dans les sessions cloud. Pour du Rust, le même rôle est tenu par cargo fmt, clippy et cargo test, et cargo-deny contrôle les bibliothèques (`deny.toml`) : seules les licences permissives passent, sans faille connue, depuis crates.io. Si cargo-deny refuse une licence, c'est une zone rouge : demande-moi. Marque chaque paquet Rust du projet `publish = false`. Ne contourne jamais ces contrôles (pas de `--no-verify`) : s'ils bloquent, c'est le travail qu'on corrige.
 
 ## Ce que cette session ne peut pas faire
 

@@ -31,9 +31,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Forme, défauts et tests (cargo fmt, clippy, cargo test)
+      - name: Y a-t-il du Rust ?
+        id: rust
         run: |
-          if [ ! -f Cargo.toml ]; then echo "Pas de code Rust dans ce dépôt."; exit 0; fi
+          if [ -f Cargo.toml ]; then echo "present=true" >> "$GITHUB_OUTPUT"; else echo "Pas de code Rust dans ce dépôt."; fi
+      - name: Forme, défauts et tests (cargo fmt, clippy, cargo test)
+        if: steps.rust.outputs.present == 'true'
+        run: |
           cargo fmt --check
           cargo clippy --all-targets -- -D warnings -W clippy::cognitive_complexity
           cargo test
+      - name: Licences, failles et provenance des bibliothèques (cargo-deny)
+        if: steps.rust.outputs.present == 'true'
+        uses: EmbarkStudios/cargo-deny-action@v2

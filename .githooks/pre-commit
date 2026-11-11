@@ -28,6 +28,12 @@ if [ -f Cargo.toml ]; then
     cargo clippy --quiet --all-targets -- -D warnings -W clippy::cognitive_complexity \
       || { signaler "clippy a trouvé des problèmes."; echec=1; }
     cargo test --quiet || { signaler "des tests Rust échouent."; echec=1; }
+    if command -v cargo-deny >/dev/null; then
+      cargo deny check --hide-inclusion-graph \
+        || { signaler "cargo-deny refuse une bibliothèque (licence, faille ou provenance)."; echec=1; }
+    else
+      signaler "cargo-deny n'est pas installé ici, contrôle des licences sauté (GitHub le fera)."
+    fi
   else
     signaler "cargo n'est pas installé ici, contrôles Rust sautés."
   fi
