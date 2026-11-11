@@ -91,23 +91,30 @@ Quatre règles de découpage :
 
 ## 4. Le dosage
 
-Choisis le modèle et l'effort de chaque agent au lancement. Consulte d'abord `chantier/DOSAGE.md`. À défaut :
+Choisis le modèle et l'effort de chaque agent au lancement. C'est un jugement, pas une table à appliquer : demande-toi ce que coûterait une erreur passée inaperçue, pas seulement si la tâche est difficile. Consulte d'abord `chantier/DOSAGE.md`, qui garde ce que les chantiers précédents ont appris.
+
+Points de départ :
 
 | Type de tâche | Départ |
 |---|---|
 | Mécanique, bien cadrée (renommage, liaison, mise en forme) | Haiku, effort faible |
 | Fonctionnalité courante avec tests clairs | Sonnet, effort moyen |
 | Délicate (sécurité, contrat entre modules) | Opus, effort élevé |
-| Physique ou formule de norme (calcul scientifique, texte normatif) | Modèle frontière, effort max |
+| Norme de calcul, ou formule dont une erreur passerait les tests | Modèle frontière, effort max |
 | Conception, architecture, arbitrage entre options | Modèle frontière, effort élevé |
 
-Dose selon ce que coûterait une erreur passée inaperçue, pas seulement selon la difficulté.
+Tu peux t'en écarter dans les deux sens. Écris alors au journal, en une ligne, l'agent choisi et pourquoi.
 
-- **Pour une tâche mécanique ou courante, pars bas.** L'escalade rattrape les échecs, et c'est ce qui permet d'apprendre le bon dosage.
-- **Pour la physique et les formules de norme, pars directement au plus haut.** Une erreur y est plausible, passe les tests écrits par le même agent et ne se voit que bien plus tard. Constat de terrain sur l'implémentation d'une norme de calcul : le modèle frontière en effort élevé laissait des zones d'erreur, et seul l'effort max les a rattrapées.
-- **Ne lésine pas quand la justesse est en jeu.** Les tokens dépensés là coûtent moins cher qu'une erreur découverte tard. Économise sur le mécanique, pas sur la conception ni sur la physique.
+Deux règles restent fermes, parce qu'elles viennent de l'expérience et que tu ne peux pas les déduire :
+
+- **Une vraie norme de calcul part en effort max**, avec un vérificateur au même niveau qui s'appuie sur des références extérieures. Constat de terrain sur l'implémentation d'une norme : le modèle frontière en effort élevé laissait des zones d'erreur, et seul l'effort max les a rattrapées. À l'inverse, une formule de quelques lignes que les tests attrapent n'est pas une norme, même si c'est de la physique.
+- **Une tâche mécanique ne dépasse jamais Sonnet.** Si elle résiste, c'est souvent la consigne qui est en cause.
+
+Tu ne vois pas la consommation de quota, et un modèle frontière en effort max coûte bien plus cher qu'un Sonnet. Économise sur le mécanique, jamais sur la justesse.
 
 L'échelle des modèles va de Haiku à Sonnet, Opus, puis le modèle frontière (Fable aujourd'hui). L'échelle d'effort va de faible à moyen, élevé, puis max. Quand le modèle est déjà au plus haut, c'est l'effort qu'on monte.
+
+**En pratique.** L'effort d'un sous-agent ne se règle pas au lancement : il est fixé dans son fichier d'agent. Si le projet définit un agent par combinaison (par exemple `ouvrier-sonnet-eleve` ou `verificateur-opus-max`), prends celui dont le nom correspond au modèle et à l'effort décidés. Sans ces fichiers, le sous-agent hérite de ton propre effort.
 
 ## 5. La consigne d'un agent
 
