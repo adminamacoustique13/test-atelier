@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "decibels"
+version = "0.1.0"
+description = "Addition et moyenne de niveaux sonores exprimés en décibels."
+readme = "MODE_EMPLOI.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["decibels*"]
+
+[tool.ruff]
+line-length = 100

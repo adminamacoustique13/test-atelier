@@ -2,7 +2,7 @@
 
 Contrat : `chantier/CONTRAT.md`, validé le 2026-11-11. Enveloppe : 6 agents, 3 tentatives par tâche, 2 montées en gamme.
 
-Agents lancés à ce jour : 0 sur 6.
+Agents lancés à ce jour : 3 sur 6.
 
 ## Sous-plan unique : la bibliothèque `decibels`
 
@@ -15,7 +15,7 @@ Les deux périmètres sont disjoints et aucune tâche n'a besoin des fichiers de
 
 ## Tâche A — Squelette du paquet
 
-- État : à lancer
+- État : vérifié
 - Dosage : `ouvrier-mecanique` (Haiku, faible), vérifié par `verificateur-sonnet`
 - Périmètre : `pyproject.toml`, `.gitignore`, `MODE_EMPLOI.md`, `chantier/relais/A.md`
 - Dépendances : aucune
@@ -36,7 +36,7 @@ Preuve : lecture du fichier par `tomllib`, `ruff check .` qui accepte la configu
 
 ## Tâche B — Fonctions de calcul et tests
 
-- État : à lancer
+- État : en cours
 - Dosage : `ouvrier-physique` (Fable, max), vérifié par `verificateur-fable-max`
 - Périmètre : `decibels/__init__.py`, `decibels/niveaux.py`, `tests/test_niveaux.py`, `chantier/relais/B.md`
 - Dépendances : aucune
@@ -69,5 +69,10 @@ Preuve : la commande de test du profil passe ; le vérificateur recalcule les va
 
 | Tâche | État | Agent | Tentatives | Montées | Preuve |
 |---|---|---|---|---|---|
-| A | à lancer | ouvrier-mecanique | 0 | 0 | |
-| B | à lancer | ouvrier-physique | 0 | 0 | |
+| A | vérifié | ouvrier-mecanique (Haiku, faible), vérifié par verificateur-sonnet | 1 | 0 | tomllib et ruff lisent la configuration ; chiffres du mode d'emploi recalculés ; métadonnées setuptools construites sur une copie |
+| B | en cours | ouvrier-physique | 1 | 0 | |
+
+## Notes
+
+- Tâche A : le vérificateur signale que les critères ne demandaient pas que ruff et setuptools lisent réellement la configuration ; il l'a contrôlé de lui-même. À retenir pour les prochains critères d'emballage.
+- Tâche A : `.ruff_cache/` n'est pas dans `.gitignore` ; sans effet, ruff y dépose son propre fichier d'exclusion.
