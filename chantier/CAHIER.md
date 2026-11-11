@@ -2,7 +2,7 @@
 
 Contrat : `chantier/CONTRAT.md`, validé le 2026-11-11. Enveloppe : 6 agents, 3 tentatives par tâche, 2 montées en gamme.
 
-Agents lancés à ce jour : 3 sur 6.
+Agents lancés à ce jour : 5 sur 6. Le sixième est réservé au vérificateur de A.1 : il ne reste aucune marge pour une seconde tentative sans accord de la personne responsable.
 
 ## Sous-plan unique : la bibliothèque `decibels`
 
@@ -36,7 +36,7 @@ Preuve : lecture du fichier par `tomllib`, `ruff check .` qui accepte la configu
 
 ## Tâche B — Fonctions de calcul et tests
 
-- État : en cours
+- État : en vérification
 - Dosage : `ouvrier-physique` (Fable, max), vérifié par `verificateur-fable-max`
 - Périmètre : `decibels/__init__.py`, `decibels/niveaux.py`, `tests/test_niveaux.py`, `chantier/relais/B.md`
 - Dépendances : aucune
@@ -65,12 +65,28 @@ Critères :
 
 Preuve : la commande de test du profil passe ; le vérificateur recalcule les valeurs de référence indépendamment et éprouve les tests sur une copie hors du dépôt.
 
+## Tâche A.1 — Forme de l'exemple du mode d'emploi (ajoutée en route)
+
+- État : en cours
+- Origine : l'ouvrier de B a constaté que `ruff format --check .` échoue sur `MODE_EMPLOI.md`. L'orchestrateur n'avait lancé que `ruff check` sur la tâche A, pas la commande complète du profil : erreur de l'orchestrateur, pas de l'ouvrier.
+- Dosage : `ouvrier-mecanique` (Haiku, faible), vérifié par `verificateur-sonnet`
+- Périmètre : `MODE_EMPLOI.md`, `chantier/relais/A.1.md`
+
+Critères :
+
+1. `ruff format --check .` réussit à la racine du dépôt.
+2. L'exemple garde les trois mêmes appels et les trois mêmes résultats.
+3. Aucune autre ligne de `MODE_EMPLOI.md` ne change.
+
+Preuve : la commande du profil et le diff du fichier.
+
 ## Suivi
 
 | Tâche | État | Agent | Tentatives | Montées | Preuve |
 |---|---|---|---|---|---|
 | A | vérifié | ouvrier-mecanique (Haiku, faible), vérifié par verificateur-sonnet | 1 | 0 | tomllib et ruff lisent la configuration ; chiffres du mode d'emploi recalculés ; métadonnées setuptools construites sur une copie |
-| B | en cours | ouvrier-physique | 1 | 0 | |
+| B | en vérification | ouvrier-physique (Fable, max), vérificateur verificateur-fable-max | 1 | 0 | 47 tests passent, ruff passe, périmètre respecté |
+| A.1 | en cours | ouvrier-mecanique | 1 | 0 | |
 
 ## Notes
 
