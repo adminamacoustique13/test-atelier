@@ -36,7 +36,7 @@ Preuve : lecture du fichier par `tomllib`, `ruff check .` qui accepte la configu
 
 ## Tâche B — Fonctions de calcul et tests
 
-- État : en vérification
+- État : vérifié
 - Dosage : `ouvrier-physique` (Fable, max), vérifié par `verificateur-fable-max`
 - Périmètre : `decibels/__init__.py`, `decibels/niveaux.py`, `tests/test_niveaux.py`, `chantier/relais/B.md`
 - Dépendances : aucune
@@ -85,10 +85,14 @@ Preuve : la commande du profil et le diff du fichier.
 | Tâche | État | Agent | Tentatives | Montées | Preuve |
 |---|---|---|---|---|---|
 | A | vérifié | ouvrier-mecanique (Haiku, faible), vérifié par verificateur-sonnet | 1 | 0 | tomllib et ruff lisent la configuration ; chiffres du mode d'emploi recalculés ; métadonnées setuptools construites sur une copie |
-| B | en vérification | ouvrier-physique (Fable, max), vérificateur verificateur-fable-max | 1 | 0 | 47 tests passent, ruff passe, périmètre respecté |
+| B | vérifié | ouvrier-physique (Fable, max), vérifié par verificateur-fable-max | 1 | 0 | 47 tests passent ; valeurs recalculées par trois chemins indépendants ; 97 altérations du module, aucune faute de formule ne passe les tests |
 | A.1 | vérifié | ouvrier-mecanique (Haiku, faible), vérifié par verificateur-sonnet | 1 | 0 | `ruff format --check .` passe et échoue bien sur une copie cassée ; diff limité aux trois lignes de l'exemple |
 
 ## Notes
 
 - Tâche A : le vérificateur signale que les critères ne demandaient pas que ruff et setuptools lisent réellement la configuration ; il l'a contrôlé de lui-même. À retenir pour les prochains critères d'emballage.
 - Tâche A : `.ruff_cache/` n'est pas dans `.gitignore` ; sans effet, ruff y dépose son propre fichier d'exclusion.
+- Tâche B : validée du premier coup. Le vérificateur n'a pas pu lire le texte des normes (payantes, hôtes hors du réseau de la session) ; il s'est appuyé sur la dérivation, un recalcul indépendant et une table publiée d'addition de niveaux.
+- Tâche B, consigne mal posée (à la charge de l'orchestrateur) : les valeurs de référence des critères n'avaient que deux niveaux écartés de 0 ou 10 dB ; quatre fautes plausibles les auraient passées. Ce sont les tests ajoutés par l'ouvrier (720 listes comparées à une référence décimale) qui ferment le trou.
+- Tâche B, consigne mal posée : le critère 8 « pour toute liste, à 1e-9 près » ne tient pas en flottant sans le plancher ajouté par l'ouvrier.
+- Restes signalés par le vérificateur, non traités, enveloppe épuisée : `bytes` accepté comme liste de niveaux ; une docstring de 101 caractères dans `tests/test_niveaux.py` ligne 391 ; la règle de longueur de ligne (E501) n'est contrôlée par aucune commande du profil ; le mode d'emploi ne dit pas quels types de nombres sont acceptés.
