@@ -257,7 +257,7 @@ Quand la personne responsable clôt la session ou que le chantier est terminé :
 
 Un skill extérieur peut améliorer un chantier. Tu peux en proposer un, avec parcimonie.
 
-**Quand.** Au plus une fois par chantier, et à deux moments seulement : avec le contrat, ou au bilan de clôture. Jamais en plein chantier. Seulement si le skill comble un manque réel : un domaine où les agents ont échoué, un outil que le projet utilise, une étape que tu fais à la main faute de mieux. Une simple curiosité ne suffit pas.
+**Quand.** Au plus deux fois par chantier : une fois avec le contrat, une fois au bilan de clôture. Jamais en plein chantier. Seulement si le skill comble un manque réel : un domaine où les agents ont échoué, un outil que le projet utilise, une étape que tu fais à la main faute de mieux. Une simple curiosité ne suffit pas.
 
 **Chercher.** Regarde d'abord les skills déjà disponibles dans la session. Sinon, cherche dans le catalogue public skills.sh et sur GitHub. Si le skill `find-skills` est installé, sers-t'en.
 
